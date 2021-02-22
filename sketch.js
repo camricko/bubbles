@@ -3,10 +3,10 @@
 let initialS = 1;
 let initialFade = 25;
 let initialFadeAmount = 3;
-let madeIt = 100;
+let madeIt = 170;
 let maxS = 100;
 let overshootS = 410;
-let delayTime = 45;
+let delayTime = 55;
 
 let greyChangeSpeed = 30;
 let greyChangeDelay = 3;
@@ -50,21 +50,17 @@ function setup() {
 
   droplet[4] = new circle((windowWidth/10)*8, (windowHeight/10)*3, cRed, 0);
   droplet[5] = new circle(droplet[4].x - 50, droplet[4].y + 130, cRed, 1);
-  droplet[6] = new circle(droplet[5].x + 120, droplet[5].y, cRed, 2);
-  droplet[7] = new circle(droplet[4].x - 70, droplet[4].y + 45, cRed, 3);
-  droplet[8] = new circle(droplet[4].x + 70, droplet[4].y + 50, cRed, 4);
+  droplet[6] = new circle(droplet[5].x + 120, droplet[5].y + 80, cRed, 2);
 
-  droplet[9] = new circle(windowWidth/10, windowHeight/5, cGreen, 0);
-  droplet[10] = new circle(droplet[9].x + 140, droplet[9].y, cGreen, 1);
-  droplet[11] = new circle(droplet[9].x + 230, droplet[9].y + 60, cGreen, 2);
-  droplet[12] = new circle(droplet[9].x + 250, droplet[9].y + 170, cGreen, 3);
-  droplet[13] = new circle(droplet[9].x + 110, droplet[9].y + 170, cGreen, 4);
-  droplet[14] = new circle(droplet[9].x + 10, droplet[9].y + 100, cGreen, 5);
+  droplet[7] = new circle(windowWidth/10*2.5, windowHeight/5, cGreen, 0);
+  droplet[8] = new circle(droplet[7].x + 140, droplet[7].y, cGreen, 1);
+  droplet[9] = new circle(droplet[7].x + 230, droplet[7].y + 60, cGreen, 2);
+  droplet[10] = new circle(droplet[7].x + 250, droplet[7].y + 170, cGreen, 3);
 
-  droplet[15] = new circle(windowWidth/2, windowHeight/8, cPurple, 0);
-  droplet[16] = new circle(droplet[15].x - 40, droplet[15].y + 160, cPurple, 1);
-  droplet[17] = new circle(droplet[15].x + 60, droplet[15].y + 280, cPurple, 2);
-  droplet[18] = new circle(droplet[15].x + 200, droplet[15].y + 320, cPurple, 3);
+  // droplet[15] = new circle(windowWidth/2, windowHeight/8, cPurple, 0);
+  // droplet[16] = new circle(droplet[15].x - 40, droplet[15].y + 160, cPurple, 1);
+  // droplet[17] = new circle(droplet[15].x + 60, droplet[15].y + 280, cPurple, 2);
+  // droplet[18] = new circle(droplet[15].x + 200, droplet[15].y + 320, cPurple, 3);
 
 
   // word[0] = new text("uwu", 50, 50, 50);
@@ -292,9 +288,9 @@ function changeBackground(thisColor, thisPos){
     subArray = subRed;
     if(thisPos == 0 && subArray[0].gate == true){bgR = cRed.r1; bgG = cRed.g1; bgB = cRed.b1}
     if(thisPos == 1 && subArray[1].gate == true && subArray[0].gate == true){bgR = cRed.r2; bgG = cRed.g2; bgB = cRed.b2}
-    if(thisPos == 2 && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cRed.r3; bgG = cRed.g3; bgB = cRed.b3}
-    if(thisPos == 3 && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cRed.r4; bgG = cRed.g4; bgB = cRed.b4}
-    if(thisPos == 4 && subArray[4].gate == true && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cRed.r5; bgG = cRed.g5; bgB = cRed.b5; triggerHold = true; showMouse = true;}
+    if(thisPos == 2 && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cRed.r3; bgG = cRed.g3; bgB = cRed.b3, triggerHold = true; showMouse = true;}
+    // if(thisPos == 3 && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cRed.r4; bgG = cRed.g4; bgB = cRed.b4}
+    // if(thisPos == 4 && subArray[4].gate == true && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cRed.r5; bgG = cRed.g5; bgB = cRed.b5; triggerHold = true; showMouse = true;}
   } else {showMouse = false}
 
   if(thisColor == cBlue){
@@ -310,9 +306,9 @@ function changeBackground(thisColor, thisPos){
     if(thisPos == 0 && subArray[0].gate == true){bgR = cGreen.r1; bgG = cGreen.g1; bgB = cGreen.b1}
     if(thisPos == 1 && subArray[1].gate == true && subArray[0].gate == true){bgR = cGreen.r2; bgG = cGreen.g2; bgB = cGreen.b2}
     if(thisPos == 2 && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cGreen.r3; bgG = cGreen.g3; bgB = cGreen.b3}
-    if(thisPos == 3 && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cGreen.r4; bgG = cGreen.g4; bgB = cGreen.b4}
-    if(thisPos == 4 && subArray[4].gate == true && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cGreen.r5; bgG = cGreen.g5; bgB = cGreen.b5}
-    if(thisPos == 4 && subArray[5].gate == true && subArray[4].gate == true && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cGreen.r6; bgG = cGreen.g6; bgB = cGreen.b6; triggerHold = true; showTime = true;}
+    if(thisPos == 3 && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cGreen.r4; bgG = cGreen.g4; bgB = cGreen.b4, triggerHold = true; showTime = true;}
+    // if(thisPos == 4 && subArray[4].gate == true && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cGreen.r5; bgG = cGreen.g5; bgB = cGreen.b5}
+    // if(thisPos == 4 && subArray[5].gate == true && subArray[4].gate == true && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cGreen.r6; bgG = cGreen.g6; bgB = cGreen.b6; triggerHold = true; showTime = true;}
   } else {showTime = false}
 
   if(thisColor == cPurple){
