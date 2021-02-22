@@ -19,16 +19,17 @@ let gateTime = 300;
 
 let droplet = [];
 let subArray = [];
+let shownElements = [];
 
-let bgR = 220;
-let bgG = 220;
-let bgB = 220;
+let bgR = 240;
+let bgG = 240;
+let bgB = 240;
 
 let owo = 0;
 let uwu;
 
-let showAbout = false;
-let showMouse = false;
+let showALabyrinth = false;
+let showGoldenTies = false;
 let showTime = false;
 let showDoggo = false;
 
@@ -96,40 +97,46 @@ function drawAllBlueCircles(){
   }
 }
 
+
 function about(){
-  if(showAbout == true){
-    textAlign(LEFT);
-    fill(10);
-    stroke(10);
-    textSize(46);
-    text("Welcome", 50, 90);
+  if(showALabyrinth == true){
+    document.getElementById("alabyrinth-container").style.display = "grid";
+    document.getElementById("alabyrinth-container").style.opacity = 90 + "%";
 
-    let u = 50;
-    textSize(32);
-    text("This is what a webpage might look like", 50, 170);
-    text("Without   redirection", 50, 250);
-    text("               menus on two axes", 50, 250+u*1);
-    text("               hyperlinks", 50, 250+u*2);
-    text("Everything you see on the page", 50, 250+u*3 + 30);
-    text("is all there is to explore", 50, 250+u*4+60);
-
-    textFont("Helvetica");
+    // textAlign(LEFT);
+    // fill(10);
+    // stroke(10);
+    // textSize(46);
+    // text("Welcome", 50, 90);
+    //
+    // let u = 50;
+    // textSize(32);
+    // text("This is what a webpage might look like", 50, 170);
+    // text("Without   redirection", 50, 250);
+    // text("               menus on two axes", 50, 250+u*1);
+    // text("               hyperlinks", 50, 250+u*2);
+    // text("Everything you see on the page", 50, 250+u*3 + 30);
+    // text("is all there is to explore", 50, 250+u*4+60);
+    //
+    // textFont("Helvetica");
   }
 }
 
 function mouse(){
-  if(showMouse == true){
-    textAlign(RIGHT);
-    fill(30);
-    stroke(30);
-    textSize(46);
-    text("Are You", windowWidth - 50, 90);
-
-    let x = 50;
-    textSize(32);
-    text("more conscious of where your mouse is", windowWidth - 50, 170);
-    text("               when the website looks like this?", windowWidth - 50, 250);
-    text("               what's it like?", windowWidth - 50, 250+80*3);
+  if(showGoldenTies == true){
+    document.getElementById("goldenties-container").style.display = "grid";
+    document.getElementById("goldenties-container").style.opacity = 90 + "%";
+    // textAlign(RIGHT);
+    // fill(30);
+    // stroke(30);
+    // textSize(46);
+    // text("Are You", windowWidth - 50, 90);
+    //
+    // let x = 50;
+    // textSize(32);
+    // text("more conscious of where your mouse is", windowWidth - 50, 170);
+    // text("               when the website looks like this?", windowWidth - 50, 250);
+    // text("               what's it like?", windowWidth - 50, 250+80*3);
   }
 }
 
@@ -161,9 +168,10 @@ function doggo(){
   }
 }
 
+
 function clearText(){
-  showAbout = false;
-  showMouse = false;
+  showALabyrinth = false;
+  showGoldenTies = false;
   showTime = false;
   showDoggo = false;
 }
@@ -189,12 +197,12 @@ function greyChange(){
 
     clearText();
 
-    if(bgR < 200){bgR = bgR + greyChangeSpeed}
-    if(bgR < 215 && bgR >= 200){bgR = bgR + 5}
-    if(bgR < 220 && bgR >= 215){bgR = bgR + 1}
-    if (bgR > 220 && bgR <= 225){bgR = bgR - 1}
-    if (bgR > 225 && bgR <= 240){bgR = bgR - 5}
-    if (bgR > 240){bgR = bgR - greyChangeSpeed}
+    if(bgR < 200){bgR = bgR + greyChangeSpeed; opacityChange(60);}
+    if(bgR < 215 && bgR >= 200){bgR = bgR + 5; opacityChange(30)}
+    if(bgR < 220 && bgR >= 215){bgR = bgR + 1; opacityChange(0); shownElements.splice(0);}
+    if (bgR > 220 && bgR <= 225){bgR = bgR - 1; opacityChange(0); shownElements.splice(0);}
+    if (bgR > 225 && bgR <= 240){bgR = bgR - 5; opacityChange(30);}
+    if (bgR > 240){bgR = bgR - greyChangeSpeed; opacityChange(60);}
 
     if(bgG < 200){bgG = bgG + greyChangeSpeed}
     if(bgG < 215 && bgG >= 200){bgG = bgG + 5}
@@ -225,9 +233,30 @@ function greyChange(){
   }
 }
 
+function opacityChange(opacity) {
+  // so shownElements is going to be an array made of css Containers,
+  // such that we can getElementById and hard style change the opacity
+  // to an amount set by the input, which will be passed on by greyChange()
+  for(i=0; i<shownElements.length; i++){
+    document.getElementById(shownElements[i]).style.opacity = opacity + "%";
+  }
+}
+
 function mouseClicked(){
   for(i=0; i<subArray.length; i++){
     console.log("gate " + i + " is " + subArray[i].gate);
+  }
+}
+
+function mouseHovered(){
+  for(i=0; i<droplet.length; i++){
+    let d = dist(mouseX, mouseY, droplet[i].x, droplet[i].y);
+
+    // if a circle is hovered
+    if(d < droplet[i].s && droplet[i].s < madeIt){
+      changeBackground(droplet[i].c, droplet[i].pos);
+      droplet[i].gate = true;
+    }
   }
 }
 
@@ -261,17 +290,6 @@ function allPurpleDroplets(thisColor){
 }
 
 
-function mouseHovered(){
-  for(i=0; i<droplet.length; i++){
-    let d = dist(mouseX, mouseY, droplet[i].x, droplet[i].y);
-
-    // if a circle is hovered
-    if(d < droplet[i].s && droplet[i].s < madeIt){
-      changeBackground(droplet[i].c, droplet[i].pos);
-      droplet[i].gate = true;
-    }
-  }
-}
 
 function changeBackground(thisColor, thisPos){
   owo = 1;
@@ -288,18 +306,16 @@ function changeBackground(thisColor, thisPos){
     subArray = subRed;
     if(thisPos == 0 && subArray[0].gate == true){bgR = cRed.r1; bgG = cRed.g1; bgB = cRed.b1}
     if(thisPos == 1 && subArray[1].gate == true && subArray[0].gate == true){bgR = cRed.r2; bgG = cRed.g2; bgB = cRed.b2}
-    if(thisPos == 2 && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cRed.r3; bgG = cRed.g3; bgB = cRed.b3, triggerHold = true; showMouse = true;}
-    // if(thisPos == 3 && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cRed.r4; bgG = cRed.g4; bgB = cRed.b4}
-    // if(thisPos == 4 && subArray[4].gate == true && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cRed.r5; bgG = cRed.g5; bgB = cRed.b5; triggerHold = true; showMouse = true;}
-  } else {showMouse = false}
+    if(thisPos == 2 && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cRed.r3; bgG = cRed.g3; bgB = cRed.b3, triggerHold = true; showGoldenTies = true; shownElements.push("goldenties-container");}
+  } else {showGoldenTies = false}
 
   if(thisColor == cBlue){
     subArray = subBlue;
     if(thisPos == 0 && subArray[0].gate == true){bgR = cBlue.r1; bgG = cBlue.g1; bgB = cBlue.b1}
     if(thisPos == 1 && subArray[1].gate == true && subArray[0].gate == true){bgR = cBlue.r2; bgG = cBlue.g2; bgB = cBlue.b2}
     if(thisPos == 2 && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cBlue.r3; bgG = cBlue.g3; bgB = cBlue.b3}
-    if(thisPos == 3 && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cBlue.r4; bgG = cBlue.g4; bgB = cBlue.b4; triggerHold = true; showAbout = true;}
-  } else {showAbout = false}
+    if(thisPos == 3 && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cBlue.r4; bgG = cBlue.g4; bgB = cBlue.b4; triggerHold = true; showALabyrinth = true; shownElements.push("alabyrinth-container");}
+  } else {showALabyrinth = false}
 
   if(thisColor == cGreen){
     subArray = subGreen;
