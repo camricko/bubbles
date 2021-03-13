@@ -1,6 +1,6 @@
 
 class circle {
-  constructor(x, y, c, pos){
+  constructor(x, y, c, pos, action){
     this.x = x;
     this.y = y;
     this.s = initialS;
@@ -19,10 +19,12 @@ class circle {
     this.counter = 0;
 
     this.gate = false;
+
+    this.action = action;
   }
 
   display(){
-    if(this.appear == true){
+    if(this.appear === true){
       fill(this.r, this.g, this.b, this.fade)
     } else {
       noFill()
@@ -32,12 +34,12 @@ class circle {
   }
 
   expand(){
-    this.s = this.s + 2;
+    this.s = this.s + 1.2;
   }
 
   hue(){
     if(this.s > (maxS/3)*1.1){
-      this.fadeAmount = -3.5;
+      this.fadeAmount = -3;
     } else {
       this.fadeAmount = initialFadeAmount;
     }
@@ -85,12 +87,13 @@ class circle {
 //   }
 // }
 
+var cFirst = {r: 40, g: 140, b: 240}
 
 var cBlue = {r: 40, g: 140, b: 240,
              r1: 201, g1: 222, b1: 242,
-             r2: 157, g2: 196, b2: 235,
-             r3: 120, g3: 177, b3: 235,
-             r4: 78, g4: 158, b4: 237,
+             r2: 166, g2: 201, b2: 234,
+             r3: 146, g3: 190, b3: 232,
+             r4: 146, g4: 190, b4: 232,
             };
 var cRed = {r: 255, g: 20, b: 20,
             r1: 242, g1: 201, b1: 201,

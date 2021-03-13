@@ -4,9 +4,9 @@ let initialS = 1;
 let initialFade = 25;
 let initialFadeAmount = 3;
 let madeIt = 170;
-let maxS = 100;
-let overshootS = 410;
-let delayTime = 55;
+let maxS = 100; //the max size a bubble will ever be visible on screen
+let overshootS = 200; //size past maxS after which a circle will reset itself
+let delayTime = 40;
 
 let greyChangeSpeed = 30;
 let greyChangeDelay = 3;
@@ -21,12 +21,15 @@ let droplet = [];
 let subArray = [];
 let shownElements = [];
 
-let bgR = 240;
-let bgG = 240;
-let bgB = 240;
+let bgR = 220;
+let bgG = 220;
+let bgB = 220;
 
 let owo = 0;
-let uwu;
+let uwu = 1;
+let firstCircle;
+let initCondition = 0; //initCondition is used as an on/off to disable handleAction() after it's first run
+let dismount = 1; //most times dismountComponent() is called, this ensures it's only called once
 
 let showALabyrinth = false;
 let showGoldenTies = false;
@@ -44,19 +47,7 @@ function setup() {
   setInterval(greyChange, 1000);
   textAlign(LEFT);
 
-  droplet[0] = new circle((windowWidth/10)*1.3, (windowHeight/10)*6.2, cBlue, 0);
-  droplet[1] = new circle(droplet[0].x + 115, droplet[0].y + 80, cBlue, 1);
-  droplet[2] = new circle(droplet[0].x + 240, droplet[0].y + 120, cBlue, 2);
-  droplet[3] = new circle(droplet[0].x + 390, droplet[0].y + 130, cBlue, 3);
-
-  droplet[4] = new circle((windowWidth/10)*8, (windowHeight/10)*3, cRed, 0);
-  droplet[5] = new circle(droplet[4].x - 50, droplet[4].y + 130, cRed, 1);
-  droplet[6] = new circle(droplet[5].x + 120, droplet[5].y + 80, cRed, 2);
-
-  droplet[7] = new circle(windowWidth/10*2.5, windowHeight/5, cGreen, 0);
-  droplet[8] = new circle(droplet[7].x + 140, droplet[7].y, cGreen, 1);
-  droplet[9] = new circle(droplet[7].x + 230, droplet[7].y + 60, cGreen, 2);
-  droplet[10] = new circle(droplet[7].x + 250, droplet[7].y + 170, cGreen, 3);
+  droplet.push(new circle((windowWidth/2), (windowHeight/2), cFirst, 0, firstCircle))
 
   // droplet[15] = new circle(windowWidth/2, windowHeight/8, cPurple, 0);
   // droplet[16] = new circle(droplet[15].x - 40, droplet[15].y + 160, cPurple, 1);
@@ -72,20 +63,19 @@ function setup() {
 function draw() {
   background(bgR, bgG, bgB);
 
-  drawAllBlueCircles();
+  drawAllCircles();
   resetFinishedCircles();
-  mouseHovered();
+  handleMouseHovered();
 
+// pages:
   about();
   mouse();
   time();
   doggo();
 
-  console.log(x);
-
 }
 
-function drawAllBlueCircles(){
+function drawAllCircles(){
   for(i=0; i<droplet.length; i++){
     droplet[i].delayStart(i);
     droplet[i].gateTimer();
@@ -97,6 +87,64 @@ function drawAllBlueCircles(){
   }
 }
 
+function handleMouseHovered(){
+  for(i=0; i<droplet.length; i++){
+    let d = dist(mouseX, mouseY, droplet[i].x, droplet[i].y);
+
+    // if a circle is hovered
+    if(d < droplet[i].s && droplet[i].s < madeIt){
+      changeBackground(droplet[i].c, droplet[i].pos);
+      droplet[i].gate = true;
+      handleAction(droplet[i].action);
+    }
+  }
+}
+
+function handleAction(action) {
+  if (initCondition === 0) {
+    if (action === firstCircle) {
+      triggerHold = true;
+      if (shownElements.includes("welcome-container") === false) {shownElements.push("welcome-container")};
+      if (shownElements.includes("header") === false) {shownElements.push("header")};
+      document.getElementById("welcome-container").style.display = "grid";
+      setTimeout(() => dismountComponent(), 1000);
+      setTimeout(() => addAllBlueCircles(), 1000)
+      uwu = 1;
+      initCondition = 1;
+    }
+  }
+}
+
+function dismountComponent(){
+    if (shownElements.length > 0 && dismount === 1) {
+      for(i=0; i<shownElements.length; i++) {
+        document.getElementById(shownElements[i]).style.display = 'none';
+      }
+      shownElements.splice(0);
+      dismount = 0;
+    }
+    setTimeout(() => dismount = 1, 1500)
+}
+
+function addAllBlueCircles() {
+  droplet[0] = new circle((windowWidth/10)*1.3, (windowHeight/10)*6.2, cBlue, 0);
+  droplet[1] = new circle(droplet[0].x + 115, droplet[0].y + 80, cBlue, 1);
+  droplet[2] = new circle(droplet[0].x + 240, droplet[0].y + 120, cBlue, 2);
+  droplet[3] = new circle(droplet[0].x + 450, droplet[0].y + 130, cBlue, 3);
+}
+
+function addAllRedCircles() {
+  droplet[4] = new circle((windowWidth/10)*8, (windowHeight/10)*3, cRed, 0);
+  droplet[5] = new circle(droplet[4].x - 50, droplet[4].y + 130, cRed, 1);
+  droplet[6] = new circle(droplet[5].x + 120, droplet[5].y + 80, cRed, 2);
+}
+
+function addAllGreenCircles() {
+  droplet[7] = new circle(windowWidth/10*2.5, windowHeight/5, cGreen, 0);
+  droplet[8] = new circle(droplet[7].x + 140, droplet[7].y, cGreen, 1);
+  droplet[9] = new circle(droplet[7].x + 230, droplet[7].y + 60, cGreen, 2);
+  droplet[10] = new circle(droplet[7].x + 250, droplet[7].y + 170, cGreen, 3);
+}
 
 function about(){
   if(showALabyrinth == true){
@@ -156,7 +204,7 @@ function time(){
 }
 
 function doggo(){
-  if(showDoggo == true){
+  if(showDoggo === true){
     textAlign(CENTER);
     fill(10);
     stroke(10);
@@ -199,8 +247,8 @@ function greyChange(){
 
     if(bgR < 200){bgR = bgR + greyChangeSpeed; opacityChange(60);}
     if(bgR < 215 && bgR >= 200){bgR = bgR + 5; opacityChange(30)}
-    if(bgR < 220 && bgR >= 215){bgR = bgR + 1; opacityChange(0); shownElements.splice(0);}
-    if (bgR > 220 && bgR <= 225){bgR = bgR - 1; opacityChange(0); shownElements.splice(0);}
+    if(bgR < 220 && bgR >= 215){bgR = bgR + 1; opacityChange(0); dismountComponent();}
+    if (bgR > 220 && bgR <= 225){bgR = bgR - 1; opacityChange(0); dismountComponent();}
     if (bgR > 225 && bgR <= 240){bgR = bgR - 5; opacityChange(30);}
     if (bgR > 240){bgR = bgR - greyChangeSpeed; opacityChange(60);}
 
@@ -243,21 +291,8 @@ function opacityChange(opacity) {
 }
 
 function mouseClicked(){
-  for(i=0; i<subArray.length; i++){
-    console.log("gate " + i + " is " + subArray[i].gate);
-  }
-}
-
-function mouseHovered(){
-  for(i=0; i<droplet.length; i++){
-    let d = dist(mouseX, mouseY, droplet[i].x, droplet[i].y);
-
-    // if a circle is hovered
-    if(d < droplet[i].s && droplet[i].s < madeIt){
-      changeBackground(droplet[i].c, droplet[i].pos);
-      droplet[i].gate = true;
-    }
-  }
+    console.log(shownElements);
+    console.log(dismount);
 }
 
 function mouseWheel(){
@@ -302,11 +337,21 @@ function changeBackground(thisColor, thisPos){
   // let subGreen = droplet.filter(allGreenDroplets);
   // let subPurple = droplet.filter(allPurpleDroplets);
 
+  if(thisColor === cFirst) {
+    bgR = 220; bgG = 220; bgB = 220;
+  }
+
   if(thisColor == cRed){
     subArray = subRed;
     if(thisPos == 0 && subArray[0].gate == true){bgR = cRed.r1; bgG = cRed.g1; bgB = cRed.b1}
     if(thisPos == 1 && subArray[1].gate == true && subArray[0].gate == true){bgR = cRed.r2; bgG = cRed.g2; bgB = cRed.b2}
-    if(thisPos == 2 && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cRed.r3; bgG = cRed.g3; bgB = cRed.b3, triggerHold = true; showGoldenTies = true; shownElements.push("goldenties-container");}
+    if(thisPos == 2 && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){
+      bgR = cRed.r3; bgG = cRed.g3; bgB = cRed.b3;
+      triggerHold = true;
+      showGoldenTies = true;
+      dismountComponent();
+      if (shownElements.includes("goldenties-container") === false) {shownElements.push("goldenties-container")};
+    }
   } else {showGoldenTies = false}
 
   if(thisColor == cBlue){
@@ -314,7 +359,17 @@ function changeBackground(thisColor, thisPos){
     if(thisPos == 0 && subArray[0].gate == true){bgR = cBlue.r1; bgG = cBlue.g1; bgB = cBlue.b1}
     if(thisPos == 1 && subArray[1].gate == true && subArray[0].gate == true){bgR = cBlue.r2; bgG = cBlue.g2; bgB = cBlue.b2}
     if(thisPos == 2 && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cBlue.r3; bgG = cBlue.g3; bgB = cBlue.b3}
-    if(thisPos == 3 && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cBlue.r4; bgG = cBlue.g4; bgB = cBlue.b4; triggerHold = true; showALabyrinth = true; shownElements.push("alabyrinth-container");}
+    if(thisPos == 3 && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){
+      bgR = cBlue.r4; bgG = cBlue.g4; bgB = cBlue.b4;
+      triggerHold = true;
+      showALabyrinth = true;
+      showDoggo = true;
+      dismountComponent();
+      if (shownElements.includes("alabyrinth-container") === false) {shownElements.push("alabyrinth-container")};
+      uwu = 1;
+      setTimeout(() => addAllRedCircles(), 9000);
+      setTimeout(() => addAllGreenCircles(), 9500);
+    }
   } else {showALabyrinth = false}
 
   if(thisColor == cGreen){
@@ -322,7 +377,13 @@ function changeBackground(thisColor, thisPos){
     if(thisPos == 0 && subArray[0].gate == true){bgR = cGreen.r1; bgG = cGreen.g1; bgB = cGreen.b1}
     if(thisPos == 1 && subArray[1].gate == true && subArray[0].gate == true){bgR = cGreen.r2; bgG = cGreen.g2; bgB = cGreen.b2}
     if(thisPos == 2 && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cGreen.r3; bgG = cGreen.g3; bgB = cGreen.b3}
-    if(thisPos == 3 && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cGreen.r4; bgG = cGreen.g4; bgB = cGreen.b4, triggerHold = true; showTime = true;}
+    if(thisPos == 3 && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){
+      bgR = cGreen.r4; bgG = cGreen.g4; bgB = cGreen.b4;
+      triggerHold = true;
+      // showTime = true;
+        showDoggo = true;
+      dismountComponent();
+    }
     // if(thisPos == 4 && subArray[4].gate == true && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cGreen.r5; bgG = cGreen.g5; bgB = cGreen.b5}
     // if(thisPos == 4 && subArray[5].gate == true && subArray[4].gate == true && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cGreen.r6; bgG = cGreen.g6; bgB = cGreen.b6; triggerHold = true; showTime = true;}
   } else {showTime = false}
@@ -332,8 +393,12 @@ function changeBackground(thisColor, thisPos){
     if(thisPos == 0 && subArray[0].gate == true){bgR = cPurple.r1; bgG = cPurple.g1; bgB = cPurple.b1}
     if(thisPos == 1 && subArray[1].gate == true && subArray[0].gate == true){bgR = cPurple.r2; bgG = cPurple.g2; bgB = cPurple.b2}
     if(thisPos == 2 && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cPurple.r3; bgG = cPurple.g3; bgB = cPurple.b3}
-    if(thisPos == 3 && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cPurple.r4; bgG = cPurple.g4; bgB = cPurple.b4; triggerHold = true; showDoggo = true;}
-  } else {showDoggo = false}
+    if(thisPos == 3 && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){
+      bgR = cPurple.r4; bgG = cPurple.g4; bgB = cPurple.b4;
+      triggerHold = true;
+      showDoggo = true;
+    }
+  } else {}
 }
 
 // function gateTimer(thisDroplet){
