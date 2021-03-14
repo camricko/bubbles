@@ -69,6 +69,11 @@ p {
   align-content: space-between;
 }
 
+#welcome-container *, #alabyrinth-container *, #goldenties-container * {
+  opacity: 0%;
+  transition: opacity 5s;
+}
+
 #alabyrinth-container {
   position: absolute;
   display: none;

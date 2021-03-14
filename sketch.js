@@ -103,11 +103,18 @@ function handleMouseHovered(){
 function handleAction(action) {
   if (initCondition === 0) {
     if (action === firstCircle) {
-      triggerHold = true;
       if (shownElements.includes("welcome-container") === false) {shownElements.push("welcome-container")};
       if (shownElements.includes("header") === false) {shownElements.push("header")};
+      triggerHold = true;
       document.getElementById("welcome-container").style.display = "grid";
-      setTimeout(() => dismountComponent(), 1000);
+      // document.getElementById("welcome-container").style.opacity = 90 + "%";
+      var parentNode = document.getElementById("welcome-container");
+      var elementList = parentNode.querySelectorAll('*');
+      elementList.forEach(function(item) {
+        setTimeout(() => item.style.opacity = 100 + '%', 30)
+      })
+
+      // setTimeout(() => dismountComponent(), 9000);
       setTimeout(() => addAllBlueCircles(), 1000)
       uwu = 1;
       initCondition = 1;
@@ -143,7 +150,7 @@ function addAllGreenCircles() {
   droplet[7] = new circle(windowWidth/10*2.5, windowHeight/5, cGreen, 0);
   droplet[8] = new circle(droplet[7].x + 140, droplet[7].y, cGreen, 1);
   droplet[9] = new circle(droplet[7].x + 230, droplet[7].y + 60, cGreen, 2);
-  droplet[10] = new circle(droplet[7].x + 250, droplet[7].y + 170, cGreen, 3);
+  droplet[10] = new circle(droplet[7].x + 280, droplet[7].y + 230, cGreen, 3);
 }
 
 function about(){
@@ -241,7 +248,7 @@ function resetFinishedCircles(){
 }
 
 function greyChange(){
-  if(owo == 0){
+  if(owo === 0){
 
     clearText();
 
@@ -267,7 +274,7 @@ function greyChange(){
     if (bgB > 240){bgB = bgB - greyChangeSpeed}
   }
   else {
-    if(triggerHold == true){
+    if(triggerHold === true){
       x = greyChangeDelay + holdAmount;
       triggerHold = false;
     }
@@ -341,6 +348,28 @@ function changeBackground(thisColor, thisPos){
     bgR = 220; bgG = 220; bgB = 220;
   }
 
+  if(thisColor == cBlue){
+    subArray = subBlue;
+    if(thisPos == 0 && subArray[0].gate == true){bgR = cBlue.r1; bgG = cBlue.g1; bgB = cBlue.b1}
+    if(thisPos == 1 && subArray[1].gate == true && subArray[0].gate == true){bgR = cBlue.r2; bgG = cBlue.g2; bgB = cBlue.b2}
+    if(thisPos == 2 && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cBlue.r3; bgG = cBlue.g3; bgB = cBlue.b3}
+    if(thisPos == 3 && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){
+      bgR = cBlue.r4; bgG = cBlue.g4; bgB = cBlue.b4;
+      triggerHold = true;
+      showALabyrinth = true;
+      dismountComponent();
+      if (shownElements.includes("alabyrinth-container") === false) {shownElements.push("alabyrinth-container")};
+      uwu = 1;
+      var parentNode = document.getElementById("alabyrinth-container");
+      var elementList = parentNode.querySelectorAll('*');
+      elementList.forEach(function(item) {
+        setTimeout(() => item.style.opacity = 100 + '%', 30)
+      })
+      setTimeout(() => addAllRedCircles(), 9000);
+      setTimeout(() => addAllGreenCircles(), 9500);
+    }
+  } else {showALabyrinth = false}
+
   if(thisColor == cRed){
     subArray = subRed;
     if(thisPos == 0 && subArray[0].gate == true){bgR = cRed.r1; bgG = cRed.g1; bgB = cRed.b1}
@@ -351,26 +380,13 @@ function changeBackground(thisColor, thisPos){
       showGoldenTies = true;
       dismountComponent();
       if (shownElements.includes("goldenties-container") === false) {shownElements.push("goldenties-container")};
+      var parentNode = document.getElementById("goldenties-container");
+      var elementList = parentNode.querySelectorAll('*');
+      elementList.forEach(function(item) {
+        setTimeout(() => item.style.opacity = 100 + '%', 30)
+      })
     }
   } else {showGoldenTies = false}
-
-  if(thisColor == cBlue){
-    subArray = subBlue;
-    if(thisPos == 0 && subArray[0].gate == true){bgR = cBlue.r1; bgG = cBlue.g1; bgB = cBlue.b1}
-    if(thisPos == 1 && subArray[1].gate == true && subArray[0].gate == true){bgR = cBlue.r2; bgG = cBlue.g2; bgB = cBlue.b2}
-    if(thisPos == 2 && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cBlue.r3; bgG = cBlue.g3; bgB = cBlue.b3}
-    if(thisPos == 3 && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){
-      bgR = cBlue.r4; bgG = cBlue.g4; bgB = cBlue.b4;
-      triggerHold = true;
-      showALabyrinth = true;
-      showDoggo = true;
-      dismountComponent();
-      if (shownElements.includes("alabyrinth-container") === false) {shownElements.push("alabyrinth-container")};
-      uwu = 1;
-      setTimeout(() => addAllRedCircles(), 9000);
-      setTimeout(() => addAllGreenCircles(), 9500);
-    }
-  } else {showALabyrinth = false}
 
   if(thisColor == cGreen){
     subArray = subGreen;
@@ -381,7 +397,6 @@ function changeBackground(thisColor, thisPos){
       bgR = cGreen.r4; bgG = cGreen.g4; bgB = cGreen.b4;
       triggerHold = true;
       // showTime = true;
-        showDoggo = true;
       dismountComponent();
     }
     // if(thisPos == 4 && subArray[4].gate == true && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cGreen.r5; bgG = cGreen.g5; bgB = cGreen.b5}
