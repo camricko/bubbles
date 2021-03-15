@@ -1,0 +1,46 @@
+#cloud-container > img{
+  position: absolute;
+  left: -200px;
+  animation: 7s linear 1s infinite right;
+  width: 5vw;
+  overflow: hidden;
+  z-index: 0;
+}
+
+@keyframes right {
+  0% {left: -200px}
+  20% {left: 10%}
+  50% {left: 40%}
+  70% {left: 45%}
+  100% {left: 100%}
+}
+
+#cloud-container > img:nth-of-type(1) {
+  top: 100px;
+  animation-delay: 3s;
+}
+
+#cloud-container > img:nth-of-type(2) {
+  top: 200px;
+  animation-delay: 2s;
+}
+
+#cloud-container > img:nth-of-type(3) {
+  top: 300px;
+  animation-delay: 1s;
+}
+
+#cloud-container > img:nth-of-type(4) {
+  top: 400px;
+  animation-delay: 2.5s;
+}
+
+#cloud-container > img:nth-of-type(5) {
+  top: 500px;
+  animation-delay: 4.3s;
+}
+
+#cloud-container > img:nth-of-type(6) {
+  top: 600px;
+  animation-delay: 3.3s;
+}

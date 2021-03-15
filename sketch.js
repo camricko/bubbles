@@ -21,11 +21,11 @@ let droplet = [];
 let subArray = [];
 let shownElements = [];
 
-let bgR = 220;
-let bgG = 220;
-let bgB = 220;
+let bgR = 252;
+let bgG = 248;
+let bgB = 169;
 
-let owo = 0;
+let owo = 2;
 let uwu = 1;
 let firstCircle;
 let initCondition = 0; //initCondition is used as an on/off to disable handleAction() after it's first run
@@ -33,8 +33,7 @@ let dismount = 1; //most times dismountComponent() is called, this ensures it's 
 
 let showALabyrinth = false;
 let showGoldenTies = false;
-let showTime = false;
-let showDoggo = false;
+let showLacie = false;
 
 let img;
 
@@ -43,21 +42,16 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  var canvas = createCanvas(windowWidth, windowHeight);
+  canvas.parent('sketch-holder');
   setInterval(greyChange, 1000);
   textAlign(LEFT);
 
   droplet.push(new circle((windowWidth/2), (windowHeight/2), cFirst, 0, firstCircle))
+}
 
-  // droplet[15] = new circle(windowWidth/2, windowHeight/8, cPurple, 0);
-  // droplet[16] = new circle(droplet[15].x - 40, droplet[15].y + 160, cPurple, 1);
-  // droplet[17] = new circle(droplet[15].x + 60, droplet[15].y + 280, cPurple, 2);
-  // droplet[18] = new circle(droplet[15].x + 200, droplet[15].y + 320, cPurple, 3);
-
-
-  // word[0] = new text("uwu", 50, 50, 50);
-  // word[1] = new text("owo", 100, 100, 50);
-
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
 
 function draw() {
@@ -66,20 +60,13 @@ function draw() {
   drawAllCircles();
   resetFinishedCircles();
   handleMouseHovered();
-
-// pages:
-  about();
-  mouse();
-  time();
-  doggo();
-
 }
 
 function drawAllCircles(){
   for(i=0; i<droplet.length; i++){
     droplet[i].delayStart(i);
     droplet[i].gateTimer();
-    if(droplet[i].appear == true){
+    if(droplet[i].appear === true){
       droplet[i].display();
       droplet[i].expand();
       droplet[i].hue();
@@ -103,29 +90,53 @@ function handleMouseHovered(){
 function handleAction(action) {
   if (initCondition === 0) {
     if (action === firstCircle) {
+      dismountComponent();
       if (shownElements.includes("welcome-container") === false) {shownElements.push("welcome-container")};
       if (shownElements.includes("header") === false) {shownElements.push("header")};
       triggerHold = true;
       document.getElementById("welcome-container").style.display = "grid";
-      // document.getElementById("welcome-container").style.opacity = 90 + "%";
       var parentNode = document.getElementById("welcome-container");
+      owo = 1;
+      changeBackground();
+
       var elementList = parentNode.querySelectorAll('*');
       elementList.forEach(function(item) {
         setTimeout(() => item.style.opacity = 100 + '%', 30)
+        setTimeout(() => item.style.opacity = 0 + '%', 9000)
+        // setTimeout(() => dismountComponent(), 15000)
       })
 
       // setTimeout(() => dismountComponent(), 9000);
-      setTimeout(() => addAllBlueCircles(), 1000)
+      setTimeout(() => addAllBlueCircles(), 1000);
       uwu = 1;
       initCondition = 1;
     }
   }
+  if(showALabyrinth === true){
+    document.getElementById("alabyrinth-container").style.display = "grid";
+    document.getElementById("alabyrinth-container").style.opacity = 90 + "%";
+  }
+  if(showGoldenTies === true){
+    document.getElementById("goldenties-container").style.display = "grid";
+    document.getElementById("goldenties-container").style.opacity = 90 + "%";
+  }
+  if(showLacie === true){
+    document.getElementById("lacie-container").style.display = "grid";
+    document.getElementById("lacie-container").style.opacity = 90 + "%";
+  }
+
+
 }
 
 function dismountComponent(){
     if (shownElements.length > 0 && dismount === 1) {
       for(i=0; i<shownElements.length; i++) {
         document.getElementById(shownElements[i]).style.display = 'none';
+        var parentNode = document.getElementById(shownElements[i]);
+        var elementList = parentNode.querySelectorAll('*');
+        elementList.forEach(function(item) {
+          item.style.opacity = 0 + '%';
+        })
       }
       shownElements.splice(0);
       dismount = 0;
@@ -137,7 +148,7 @@ function addAllBlueCircles() {
   droplet[0] = new circle((windowWidth/10)*1.3, (windowHeight/10)*6.2, cBlue, 0);
   droplet[1] = new circle(droplet[0].x + 115, droplet[0].y + 80, cBlue, 1);
   droplet[2] = new circle(droplet[0].x + 240, droplet[0].y + 120, cBlue, 2);
-  droplet[3] = new circle(droplet[0].x + 450, droplet[0].y + 130, cBlue, 3);
+  droplet[3] = new circle(droplet[0].x + 390, droplet[0].y + 130, cBlue, 3);
 }
 
 function addAllRedCircles() {
@@ -148,87 +159,22 @@ function addAllRedCircles() {
 
 function addAllGreenCircles() {
   droplet[7] = new circle(windowWidth/10*2.5, windowHeight/5, cGreen, 0);
-  droplet[8] = new circle(droplet[7].x + 140, droplet[7].y, cGreen, 1);
-  droplet[9] = new circle(droplet[7].x + 230, droplet[7].y + 60, cGreen, 2);
-  droplet[10] = new circle(droplet[7].x + 280, droplet[7].y + 230, cGreen, 3);
+  droplet[8] = new circle(droplet[7].x + 140, droplet[7].y + 20, cGreen, 1);
+  droplet[9] = new circle(droplet[8].x + 100, droplet[8].y + 60, cGreen, 2);
+  droplet[10] = new circle(droplet[7].x + 300, droplet[7].y + 150, cGreen, 3);
 }
 
-function about(){
-  if(showALabyrinth == true){
-    document.getElementById("alabyrinth-container").style.display = "grid";
-    document.getElementById("alabyrinth-container").style.opacity = 90 + "%";
-
-    // textAlign(LEFT);
-    // fill(10);
-    // stroke(10);
-    // textSize(46);
-    // text("Welcome", 50, 90);
-    //
-    // let u = 50;
-    // textSize(32);
-    // text("This is what a webpage might look like", 50, 170);
-    // text("Without   redirection", 50, 250);
-    // text("               menus on two axes", 50, 250+u*1);
-    // text("               hyperlinks", 50, 250+u*2);
-    // text("Everything you see on the page", 50, 250+u*3 + 30);
-    // text("is all there is to explore", 50, 250+u*4+60);
-    //
-    // textFont("Helvetica");
-  }
+function addAllPurpleCircles() {
+  droplet[11] = new circle((windowWidth/20)*11, (windowHeight/10)*6, cPurple, 0);
+  droplet[12] = new circle(droplet[11].x + 80, droplet[11].y + 80, cPurple, 1);
+  droplet[13] = new circle(droplet[12].x + 130, droplet[12].y + 30, cPurple, 2);
+  droplet[14] = new circle(droplet[13].x + 130, droplet[13].y + 10, cPurple, 3);
 }
-
-function mouse(){
-  if(showGoldenTies == true){
-    document.getElementById("goldenties-container").style.display = "grid";
-    document.getElementById("goldenties-container").style.opacity = 90 + "%";
-    // textAlign(RIGHT);
-    // fill(30);
-    // stroke(30);
-    // textSize(46);
-    // text("Are You", windowWidth - 50, 90);
-    //
-    // let x = 50;
-    // textSize(32);
-    // text("more conscious of where your mouse is", windowWidth - 50, 170);
-    // text("               when the website looks like this?", windowWidth - 50, 250);
-    // text("               what's it like?", windowWidth - 50, 250+80*3);
-  }
-}
-
-function time(){
-  if(showTime == true){
-    textAlign(LEFT);
-    fill(0);
-    stroke(0);
-    textSize(22);
-    let u = 60;
-    text("Did you know English has a linear conception of time?", u, 150);
-    text("Many languages are similar, but not all", u+100, 250);
-    text("Hopi, for example, spoken by the Hopi people (a Native American group)", u+320, 250+100);
-    text('Imagines time to be a ""getting later" of everything that has ever been done"', u+150, 250+280);
-    text("This project is in part an attempt to imagine what that's like", u+75, 250+540);
-  }
-}
-
-function doggo(){
-  if(showDoggo === true){
-    textAlign(CENTER);
-    fill(10);
-    stroke(10);
-    textSize(32);
-    text("this is my doggo", windowWidth/2, windowHeight/5);
-    text("her name is Lacie", windowWidth/2, (windowHeight/5)*4 + 20);
-    imageMode(CENTER);
-    image(img, windowWidth/2, windowHeight/2, 225, 300);
-  }
-}
-
 
 function clearText(){
   showALabyrinth = false;
   showGoldenTies = false;
-  showTime = false;
-  showDoggo = false;
+  showLacie = false;
 }
 
 function resetFinishedCircles(){
@@ -273,7 +219,7 @@ function greyChange(){
     if (bgB > 225 && bgB <= 240){bgB = bgB - 5}
     if (bgB > 240){bgB = bgB - greyChangeSpeed}
   }
-  else {
+  else if (owo === 1){
     if(triggerHold === true){
       x = greyChangeDelay + holdAmount;
       triggerHold = false;
@@ -298,8 +244,11 @@ function opacityChange(opacity) {
 }
 
 function mouseClicked(){
+  var parentNode = document.getElementById("alabyrinth-container");
+  var elementList = parentNode.querySelectorAll('*');
     console.log(shownElements);
     console.log(dismount);
+    console.log('opacity values:', parentNode.style.opacity)
 }
 
 function mouseWheel(){
@@ -341,11 +290,9 @@ function changeBackground(thisColor, thisPos){
   let subBlue = droplet.filter(allBlueDroplets);
   let subGreen = droplet.filter(allGreenDroplets);
   let subPurple = droplet.filter(allPurpleDroplets);
-  // let subGreen = droplet.filter(allGreenDroplets);
-  // let subPurple = droplet.filter(allPurpleDroplets);
 
   if(thisColor === cFirst) {
-    bgR = 220; bgG = 220; bgB = 220;
+    bgR = 255; bgG = 179; bgB = 220;
   }
 
   if(thisColor == cBlue){
@@ -363,10 +310,11 @@ function changeBackground(thisColor, thisPos){
       var parentNode = document.getElementById("alabyrinth-container");
       var elementList = parentNode.querySelectorAll('*');
       elementList.forEach(function(item) {
-        setTimeout(() => item.style.opacity = 100 + '%', 30)
+        setTimeout(() => item.style.opacity = 100 + '%', 30);
       })
-      setTimeout(() => addAllRedCircles(), 9000);
-      setTimeout(() => addAllGreenCircles(), 9500);
+      setTimeout(() => addAllRedCircles(), 3000);
+      setTimeout(() => addAllGreenCircles(), 3500);
+      setTimeout(() => addAllPurpleCircles(), 4000);
     }
   } else {showALabyrinth = false}
 
@@ -383,7 +331,7 @@ function changeBackground(thisColor, thisPos){
       var parentNode = document.getElementById("goldenties-container");
       var elementList = parentNode.querySelectorAll('*');
       elementList.forEach(function(item) {
-        setTimeout(() => item.style.opacity = 100 + '%', 30)
+        setTimeout(() => item.style.opacity = 100 + '%', 30);
       })
     }
   } else {showGoldenTies = false}
@@ -396,12 +344,16 @@ function changeBackground(thisColor, thisPos){
     if(thisPos == 3 && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){
       bgR = cGreen.r4; bgG = cGreen.g4; bgB = cGreen.b4;
       triggerHold = true;
-      // showTime = true;
+      showLacie = true;
       dismountComponent();
+      if (shownElements.includes("lacie-container") === false) {shownElements.push("lacie-container")};
+      var parentNode = document.getElementById("lacie-container");
+      var elementList = parentNode.querySelectorAll('*');
+      elementList.forEach(function(item) {
+        setTimeout(() => item.style.opacity = 100 + '%', 30);
+      })
     }
-    // if(thisPos == 4 && subArray[4].gate == true && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cGreen.r5; bgG = cGreen.g5; bgB = cGreen.b5}
-    // if(thisPos == 4 && subArray[5].gate == true && subArray[4].gate == true && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){bgR = cGreen.r6; bgG = cGreen.g6; bgB = cGreen.b6; triggerHold = true; showTime = true;}
-  } else {showTime = false}
+  } else {showLacie = false}
 
   if(thisColor == cPurple){
     subArray = subPurple;
@@ -411,20 +363,6 @@ function changeBackground(thisColor, thisPos){
     if(thisPos == 3 && subArray[3].gate == true && subArray[2].gate == true && subArray[1].gate == true && subArray[0].gate == true){
       bgR = cPurple.r4; bgG = cPurple.g4; bgB = cPurple.b4;
       triggerHold = true;
-      showDoggo = true;
     }
   } else {}
 }
-
-// function gateTimer(thisDroplet){
-//   // console.log(thisDroplet);
-//   if(gateTimerStart == true){
-//     y--;
-//     // console.log(y);
-//     if(y <=0){
-//       thisDroplet.gate = false;
-//       y = gateTime;
-//       gateTimerStart = false;
-//     }
-//   }
-// }

@@ -7,16 +7,33 @@
   color: #ffffff;
 }
 
+@media screen and (max-width: 990px) {
+  :root {
+    --flexbox-margin: 0;
+  }
+  p {
+    font-size: 12px;
+  }
+}
+@media screen and (min-width: 901px) {
+  :root {
+    --flexbox-margin: 8vw;
+  }
+  p {
+    font-size: 20px;
+    margin-bottom: 0.25em;
+  }
+}
+
+body * {
+  opacity: 90%;
+}
+
 html, body {
   margin: 0;
   padding: 0;
-  position: absolute;
-  font-family: Helvetica,sans-serif;
+  font-family: Helvetica, sans-serif;
   font-size: 16px;
-}
-
-canvas {
-  display: block;
 }
 
 a {
@@ -25,19 +42,22 @@ a {
   display: inline;
 }
 
-p {
+p, h2 {
+  margin-top: 0;
   color: black;
-  font-size: var(--font-size);
-  display: inline;
+  font-family: Helvetica, sans-serif;
 }
+
 
 #header {
   color: white;
-  width: 100%;
+  width: 100vw;
   height: 20vh;
   position: absolute;
+  top: 0;
   z-index: 0;
 }
+
 
 .header-group {
   margin-left: 87.5%;
@@ -55,6 +75,53 @@ p {
   margin-left: 20px;
 }
 
+#sketch-holder {
+  position: fixed;
+  top: 0;
+  z-index: -1;
+}
+
+#welcome-container *, #alabyrinth-container *, #goldenties-container *, #lacie-container * {
+  opacity: 0%;
+  transition: opacity 5s;
+}
+
+#welcome-container > div, #alabyrinth-container > div, #goldenties-container > div {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin-left: var(--flexbox-margin);
+  margin-right: var(--flexbox-margin);
+  margin-top: 5em;
+}
+
+#alabyrinth-container {
+  display: none;
+  margin-top: 30vh;
+  width: 100vw;
+  opacity: 90%;
+}
+
+#alabyrinth-container > div > div {
+  background-color: rgb(173, 225, 255);
+  max-width: 35vw;
+  margin-left: 2em;
+  margin-right: 2em;
+  padding: 25px;
+  border-radius: 5%;
+  filter: drop-shadow(10px 10px 4px #ADFDFF);
+}
+
+#alabyrinth-container img {
+  max-width: 35vw;
+  padding: 5px;
+  margin-left: 2em;
+  margin-right: 2em;
+  background-color: rgb(173, 225, 255);
+  border-radius: 10px;
+  filter: drop-shadow(10px 10px 4px #ADFDFF);
+}
+
 #welcome-container {
   position: absolute;
   display: none;
@@ -62,59 +129,88 @@ p {
   column-gap: 30vw;
   margin-top: 40vh;
   left: 7vw;
-  width: 100%;
+  width: 100vw;
   align-items: center;
   margin-left: 120px;
   margin-right: 120px;
   align-content: space-between;
-}
-
-#welcome-container *, #alabyrinth-container *, #goldenties-container * {
-  opacity: 0%;
-  transition: opacity 5s;
-}
-
-#alabyrinth-container {
-  position: absolute;
-  display: none;
-  grid-template-columns: 50% 50%;
-  margin-top: 200px;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-
-
-  opacity: 90%;
 }
 
 #goldenties-container {
-  position: absolute;
   display: none;
-  grid-template-columns: 50% 50%;
-  margin-top: 40vh;
-  width: 100%;
-  align-items: center;
-  margin-left: 120px;
-  margin-right: 120px;
-  align-content: space-between;
+  margin-top: 30vh;
+  width: 100vw;
+  opacity: 90%;
 }
 
-.text {
-  font-family: Helvetica, sans-serif;
-  font-size: 24px;
-  padding-right: 40px;
+#goldenties-container > div > div {
+  background-color: rgb(173, 225, 255);
+  max-width: 35vw;
+  margin-left: 2em;
+  margin-right: 2em;
+  padding: 25px;
+  border-radius: 5%;
+  filter: drop-shadow(10px 10px 4px #ADFDFF);
 }
 
-#alabyrinth1 {
+#lacie-container {
+  display: none;
+  margin-top: 25vh;
+  width: 100vw;
+  opacity: 90%;
+}
+
+#alabyrinth-img-1 {
+  margin-right: 2em;
+  margin-left: 2em;
+  align-self: center;
+}
+
+#alabyrinth-text-2 {
+  align-self: center;
+}
+
+#alabyrinth-img-2 {
   width: 400px;
   top: 50%;
 }
 
-#alabyrinth2 {
+#alabyrinth-text-3 {
+  align-self: center;
+}
+
+#alabyrinth-img-3 {
   width: 400px;
   top: 50%;
 }
 
-#goldenties1 {
+.goldenties-text {
+  align-self: center;
+}
+
+#goldenties-text-1, #goldenties-text-2 {
+  width: 80vw;
+}
+
+#goldenties-img-1, #goldenties-img-2, #goldenties-img-4 {
+  max-width: 35vw;
+  height: 400px;
+  padding: 5px;
+  margin-left: 2em;
+  margin-right: 2em;
+  background-color: rgb(173, 225, 255);
+  border-radius: 10px;
+  filter: drop-shadow(10px 10px 4px #ADFDFF);
+}
+
+#goldenties-img-3 {
+  height: 90vh;
+  padding: 5px;
+  background-color: rgb(173, 225, 255);
+  border-radius: 10px;
+  filter: drop-shadow(10px 10px 4px #ADFDFF);
+}
+
+#lacie-img {
   width: 400px;
 }
