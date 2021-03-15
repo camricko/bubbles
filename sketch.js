@@ -40,7 +40,16 @@ let showLacie = false;
 let img;
 
 function preload() {
-  img = loadImage("lacie.JPG");
+  img1 = loadImage("lacie-img-1.JPG");
+  img2 = loadImage("lacie-img-2.JPG");
+  img3 = loadImage("lacie-img-3.JPG");
+  img4 = loadImage("lacie-img-4.PNG");
+  img5 = loadImage("lacie-img-5.PNG");
+  img6 = loadImage("lacie-img-6.JPG");
+  img7 = loadImage("lacie-img-7.PNG");
+  img8 = loadImage("lacie-img-8.JPG");
+  img9 = loadImage("lacie-img-9.PNG");
+  img10 = loadImage("lacie-img-10.PNG");
 }
 
 function setup() {
@@ -109,7 +118,7 @@ function handleAction(action) {
       })
 
       // setTimeout(() => dismountComponent(), 9000);
-      setTimeout(() => addAllBlueCircles(), 1000);
+      setTimeout(() => addAllBlueCircles(), 5000);
       uwu = 1;
       initCondition = 1;
     }
