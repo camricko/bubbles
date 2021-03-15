@@ -21,9 +21,11 @@ let droplet = [];
 let subArray = [];
 let shownElements = [];
 
-let bgR = 252;
-let bgG = 248;
-let bgB = 169;
+
+// yellow bg color is rgb(252, 248, 169)
+let bgR = 245;
+let bgG = 144;
+let bgB = 144;
 
 let owo = 2;
 let uwu = 1;

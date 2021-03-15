@@ -25,10 +25,6 @@
   }
 }
 
-body * {
-  opacity: 90%;
-}
-
 html, body {
   margin: 0;
   padding: 0;
@@ -82,8 +78,8 @@ p, h2 {
 }
 
 #welcome-container *, #alabyrinth-container *, #goldenties-container *, #lacie-container * {
-  opacity: 0%;
-  transition: opacity 5s;
+  /* opacity: 0%;
+  transition: opacity 5s; */
 }
 
 #welcome-container > div, #alabyrinth-container > div, #goldenties-container > div {
@@ -95,6 +91,18 @@ p, h2 {
   margin-top: 5em;
 }
 
+#welcome-container {
+  display: none;
+  margin-top: 20vh;
+  width: 100vw;
+}
+
+#welcome-container > div > div {
+  max-width: 17vw;
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
 #alabyrinth-container {
   display: none;
   margin-top: 30vh;
@@ -104,36 +112,27 @@ p, h2 {
 
 #alabyrinth-container > div > div {
   background-color: rgb(173, 225, 255);
+  border-style: solid;
+  border-color: #004E7A;
+  border-width: 3px;
   max-width: 35vw;
   margin-left: 2em;
   margin-right: 2em;
   padding: 25px;
   border-radius: 5%;
-  filter: drop-shadow(10px 10px 4px #ADFDFF);
+  filter: drop-shadow(10px 10px 4px #004E7A);
 }
 
 #alabyrinth-container img {
+  background-color: rgb(173, 225, 255);
+  border-style: solid;
+  border-color: #004E7A;
+  border-width: 3px;
   max-width: 35vw;
-  padding: 5px;
   margin-left: 2em;
   margin-right: 2em;
-  background-color: rgb(173, 225, 255);
   border-radius: 10px;
-  filter: drop-shadow(10px 10px 4px #ADFDFF);
-}
-
-#welcome-container {
-  position: absolute;
-  display: none;
-  grid-template-columns: repeat(auto-fill, 20vw);
-  column-gap: 30vw;
-  margin-top: 40vh;
-  left: 7vw;
-  width: 100vw;
-  align-items: center;
-  margin-left: 120px;
-  margin-right: 120px;
-  align-content: space-between;
+  filter: drop-shadow(10px 10px 4px #004E7A);
 }
 
 #goldenties-container {
@@ -143,14 +142,33 @@ p, h2 {
   opacity: 90%;
 }
 
+#goldenties-container p, #goldenties-container h2 {
+  color: #FEF7F7;
+}
+
 #goldenties-container > div > div {
-  background-color: rgb(173, 225, 255);
+  background-color: #EE4343;
+  border-style: solid;
+  border-color: #7F0C0C;
+  border-width: 3px;
   max-width: 35vw;
   margin-left: 2em;
   margin-right: 2em;
   padding: 25px;
   border-radius: 5%;
-  filter: drop-shadow(10px 10px 4px #ADFDFF);
+  filter: drop-shadow(10px 10px 4px #650909);
+}
+
+#goldenties-container img {
+  background-color: #EE4343;
+  border-style: solid;
+  border-color: #7F0C0C;
+  border-width: 5px;
+  padding: 5px;
+  margin-left: 2em;
+  margin-right: 2em;
+  border-radius: 5%;
+  filter: drop-shadow(10px 10px 4px #650909);
 }
 
 #lacie-container {
@@ -195,20 +213,10 @@ p, h2 {
 #goldenties-img-1, #goldenties-img-2, #goldenties-img-4 {
   max-width: 35vw;
   height: 400px;
-  padding: 5px;
-  margin-left: 2em;
-  margin-right: 2em;
-  background-color: rgb(173, 225, 255);
-  border-radius: 10px;
-  filter: drop-shadow(10px 10px 4px #ADFDFF);
 }
 
 #goldenties-img-3 {
   height: 90vh;
-  padding: 5px;
-  background-color: rgb(173, 225, 255);
-  border-radius: 10px;
-  filter: drop-shadow(10px 10px 4px #ADFDFF);
 }
 
 #lacie-img {
