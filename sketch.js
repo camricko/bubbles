@@ -23,12 +23,12 @@ let shownElements = [];
 
 
 // yellow bg color is rgb(252, 248, 169)
-let bgR = 245;
-let bgG = 144;
-let bgB = 144;
+// red bg color is rgb(245, 144, 144)
+let bgR = 252;
+let bgG = 248;
+let bgB = 169;
 
 let owo = 2;
-let uwu = 1;
 let firstCircle;
 let initCondition = 0; //initCondition is used as an on/off to disable handleAction() after it's first run
 let dismount = 1; //most times dismountComponent() is called, this ensures it's only called once
@@ -36,21 +36,22 @@ let dismount = 1; //most times dismountComponent() is called, this ensures it's 
 let showALabyrinth = false;
 let showGoldenTies = false;
 let showLacie = false;
+let showJacuzzi = false;
 
 let img;
 
-function preload() {
-  img1 = loadImage("lacie-img-1.JPG");
-  img2 = loadImage("lacie-img-2.JPG");
-  img3 = loadImage("lacie-img-3.JPG");
-  img4 = loadImage("lacie-img-4.PNG");
-  img5 = loadImage("lacie-img-5.PNG");
-  img6 = loadImage("lacie-img-6.JPG");
-  img7 = loadImage("lacie-img-7.PNG");
-  img8 = loadImage("lacie-img-8.JPG");
-  img9 = loadImage("lacie-img-9.PNG");
-  img10 = loadImage("lacie-img-10.PNG");
-}
+// function preload() {
+//   img1 = loadImage("lacie-img-1.JPG");
+//   img2 = loadImage("lacie-img-2.JPG");
+//   img3 = loadImage("lacie-img-3.JPG");
+//   img4 = loadImage("lacie-img-4.PNG");
+//   img5 = loadImage("lacie-img-5.PNG");
+//   img6 = loadImage("lacie-img-6.JPG");
+//   img7 = loadImage("lacie-img-7.PNG");
+//   img8 = loadImage("lacie-img-8.JPG");
+//   img9 = loadImage("lacie-img-9.PNG");
+//   img10 = loadImage("lacie-img-10.PNG");
+// }
 
 function setup() {
   var canvas = createCanvas(windowWidth, windowHeight);
@@ -107,22 +108,19 @@ function handleAction(action) {
       triggerHold = true;
       document.getElementById("welcome-container").style.display = "grid";
       var parentNode = document.getElementById("welcome-container");
-      owo = 1;
-      changeBackground();
-
+      setTimeout(() => changeBackground(), 200000);
       var elementList = parentNode.querySelectorAll('*');
       elementList.forEach(function(item) {
         setTimeout(() => item.style.opacity = 100 + '%', 30)
-        setTimeout(() => item.style.opacity = 0 + '%', 9000)
+        setTimeout(() => item.style.opacity = 0 + '%', 15000)
         // setTimeout(() => dismountComponent(), 15000)
       })
 
       // setTimeout(() => dismountComponent(), 9000);
-      setTimeout(() => addAllBlueCircles(), 5000);
-      uwu = 1;
+      setTimeout(() => addAllBlueCircles(), 12000);
       initCondition = 1;
     }
-  }
+  } else {}
   if(showALabyrinth === true){
     document.getElementById("alabyrinth-container").style.display = "grid";
     document.getElementById("alabyrinth-container").style.opacity = 90 + "%";
@@ -135,8 +133,15 @@ function handleAction(action) {
     document.getElementById("lacie-container").style.display = "grid";
     document.getElementById("lacie-container").style.opacity = 90 + "%";
   }
+}
 
-
+function addJacuzzi() {
+  document.getElementById("jacuzzi-container").style.opacity = 90 + "%";
+  var parentNode = document.getElementById("jacuzzi-container");
+  var elementList = parentNode.querySelectorAll('div *');
+  elementList.forEach(function(item) {
+    setTimeout(() => item.style.opacity = 100 + '%', 30);
+  })
 }
 
 function dismountComponent(){
@@ -257,9 +262,9 @@ function opacityChange(opacity) {
 function mouseClicked(){
   var parentNode = document.getElementById("alabyrinth-container");
   var elementList = parentNode.querySelectorAll('*');
-    console.log(shownElements);
-    console.log(dismount);
-    console.log('opacity values:', parentNode.style.opacity)
+    console.log('shownElements are', shownElements);
+    console.log('owo is', owo);
+    // console.log('opacity values:', parentNode.style.opacity)
 }
 
 function mouseWheel(){
@@ -294,7 +299,12 @@ function allPurpleDroplets(thisColor){
 
 
 function changeBackground(thisColor, thisPos){
-  owo = 1;
+  if(thisColor === cFirst) {
+    console.log('working');
+    setTimeout(() => owo = 1, 10000);
+  } else {
+    console.log('not working');
+    owo = 1};
 
   // then give me an array with all the circles of that color
   let subRed = droplet.filter(allRedDroplets);
@@ -317,12 +327,12 @@ function changeBackground(thisColor, thisPos){
       showALabyrinth = true;
       dismountComponent();
       if (shownElements.includes("alabyrinth-container") === false) {shownElements.push("alabyrinth-container")};
-      uwu = 1;
       var parentNode = document.getElementById("alabyrinth-container");
       var elementList = parentNode.querySelectorAll('*');
       elementList.forEach(function(item) {
         setTimeout(() => item.style.opacity = 100 + '%', 30);
       })
+      setTimeout(() => addJacuzzi(), 5000);
       setTimeout(() => addAllRedCircles(), 3000);
       setTimeout(() => addAllGreenCircles(), 3500);
       setTimeout(() => addAllPurpleCircles(), 4000);
